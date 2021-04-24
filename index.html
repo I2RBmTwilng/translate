@@ -28,7 +28,10 @@
 						transtype : "realtime"
 					}, function(result) {
 						$scope.$apply(function() {
-							output = result.trans_result.data[0].dst;
+							var output = "";
+							for (var i in result.trans_result.data) {
+								output += result.trans_result.data[i].dst;
+							}
 							f(output);
 						});
 					});
@@ -44,11 +47,12 @@
 						"ue" : "UTF-8",
 						"typoResult" : "true"
 					}, function(result) {
-						$scope.$apply(function() {   　
-							debugger;
-							output = "";
-							for (var i in result.translateResult[0]) {
-								output += result.translateResult[0][i].tgt;
+						$scope.$apply(function() {
+							var output = "";
+							for (var i in result.translateResult) {
+								for (var j in result.translateResult[i]) {
+									output += result.translateResult[i][j].tgt;
+								}
 							}
 							f(output);
 							//console.log($scope.youdao);
@@ -57,10 +61,10 @@
 				};
 
 				function fanyi_google(input, f) {
-					$.get("http://translate.google.com.hk/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), function(result) {
+					$.get("http://translate.google.com.tw/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), function(result) {
 						$scope.$apply(function() { 
 							var c = eval(result);
-							output = "";
+							var output = "";
 							for (var i in c[0]) {
 								output += c[0][i][0];
 							}
@@ -99,7 +103,6 @@
 							if (sText.length > 5000)
 								sText = sText.substr(0, 5000);
 							console.log(sText);
-							debugger;
 							fanyi_s(sText);
 						}
 					}
