@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/bootstrap.css" type="text/css" charset="utf-8"/>
+		<script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			document.addEventListener("mouseup", on_mouse_up, true);
+			document.addEventListener("mousedown", on_mouse_down, true);
+			function on_mouse_down(event) {
+				mouse_down_x = event.clientX;
+				mouse_down_y = event.clientY;
+			}
+
+			function on_mouse_up(event) {
+				if (Math.abs(event.clientX - mouse_down_x) > 2 || Math.abs(event.clientY - mouse_down_y) > 2) {
+					var sText = document.selection == undefined ? document.getSelection().toString() : document.selection.createRange().text;
+					if (sText != "") {
+						// todo: 字符串过长的问题.
+						if (sText.length > 5000)
+							sText = sText.substr(0, 5000);
+						console.log(sText);
+						fanyi_baidu(sText,$scope.baidu_s);
+						fanyi_youdao(sText,$scope.youdao_s);
+						fanyi_google(sText,$scope.google_s);
+					}
+				}
+			}
+
+			function mainCtrl($scope, $http, $filter) {
+				$scope.input = "HTML input element control with angular data-binding. Input control follows HTML5 input types and polyfills the HTML5 validation behavior for older browsers.";
+				$scope.fanyi = function() {
+					$scope.google = $scope.baidu = $scope.youdao = "loading..."
+					fanyi_baidu($scope.input,$scope.baidu);
+					fanyi_youdao($scope.input,$scope.youdao);
+					fanyi_google($scope.input,$scope.google);
+				}
+				function fanyi_baidu(input,output) {
+					$.post("http://fanyi.baidu.com/v2transapi", {
+						from : "en",
+						to : "zh",
+						query : input,
+						transtype : "realtime"
+					}, function(result) {
+						$scope.$apply(function() {
+							output = result.trans_result.data[0].dst;
+						});
+
+					});
+				};
+				function fanyi_youdao(input,output) {
+					$.post("http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule&smartresult=ugc&sessionFrom=null", {
+						"type" : "AUTO",
+						"i" : unescape(encodeURIComponent(input)),
+						"doctype" : "json",
+						"xmlVersion" : "1.6",
+						"keyfrom" : "fanyi.web",
+						"ue" : "UTF-8",
+						"typoResult" : "true"
+					}, function(result) {
+						$scope.$apply(function() {   　
+							debugger;
+							output = "";
+							for (var i in result.translateResult[0]) {
+								output += result.translateResult[0][i].tgt;
+							}
+							//console.log($scope.youdao);
+						});
+					});
+				};
+
+				function fanyi_google(input,output) {
+					$.get("http://translate.google.com.hk/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), function(result) {
+						$scope.$apply(function() { 
+							var c = eval(result);
+							output = "";
+							for (var i in c[0]) {
+								output += c[0][i][0];
+							}
+							console.log(output);
+						});
+					});
+				};
+
+			};
+
+		</script>
+		<title></title>
+	</head>
+	<body ng-controller="mainCtrl">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<form action="" method="get" accept-charset="utf-8">
+						<textarea  class="form-control" rows="10" name="" rows="" cols="" ng-model="input"></textarea>
+						<input type="button" id="" value="翻译" ng-click="fanyi()"/>
+
+					</form>
+				</div>
+				<div class="col-md-4">
+					<div>
+						{{baidu}}
+					</div>
+					<hr />
+					<div>
+						{{youdao}}
+					</div>
+					<hr />
+					<div>
+						{{google}}
+					</div>
+
+				</div>
+				<div class="col-md-4">
+					<div>
+						{{baidu_s}}
+					</div>
+					<hr />
+					<div>
+						{{youdao_s}}
+					</div>
+					<hr />
+					<div>
+						{{google_s}}
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+</html>

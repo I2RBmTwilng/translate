@@ -1,0 +1,15 @@
+.ding-foot {
+	position: fixed;
+	right: 8px;
+	top: -13px;
+}
+.class-ul {
+	margin-top: 26px;
+}
+
+td input {
+	width: 100%;
+	background-color: #dff0d8;
+	border: 0;
+}
+
