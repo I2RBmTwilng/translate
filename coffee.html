@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="css/bootstrap.css" type="text/css" charset="utf-8"/>
+		<script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="js/my.js" type="text/javascript" charset="utf-8"></script>
+		
+		<title></title>
+	</head>
+	<body ng-controller="mainCtrl">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<form action="" method="get" accept-charset="utf-8">
+						<textarea  id="input" class="form-control" rows="10" name="" rows="" cols="" ng-model="input"></textarea>
+						<input type="button" id="" value="翻译" ng-click="fanyi()"/>
+					</form>
+				</div>
+				<div class="col-md-4">
+					<div>
+						{{baidu}}
+					</div>
+					<hr />
+					<div>
+						{{youdao}}
+					</div>
+					<hr />
+					<div>
+						{{google}}
+					</div>
+
+				</div>
+				<div class="col-md-4">
+					<div>
+						{{baidu_s}}
+					</div>
+					<hr />
+					<div>
+						{{youdao_s}}
+					</div>
+					<hr />
+					<div>
+						{{google_s}}
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+</html>
