@@ -84,21 +84,28 @@ window.mainCtrl = function($scope, $http, $filter) {
     });
   };
   fn.fanyi_google = function(input, f) {
-    return $.get("http://translate.google.com/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), function(result) {
-      return $scope.$apply(function() {
-        var c, i;
-        c = eval(result);
-        return f(((function() {
-          var _i, _len, _ref, _results;
-          _ref = c[0];
-          _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            i = _ref[_i];
-            _results.push(i[0]);
-          }
-          return _results;
-        })()).join(""));
-      });
+    var urls;
+    urls = "http://translate.google.com/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input);
+    return $http({
+      method: 'GET',
+      url: urls,
+      transformResponse: [
+        function(r) {
+          return eval(r);
+        }
+      ]
+    }).success(function(result) {
+      var i;
+      return f(((function() {
+        var _i, _len, _ref, _results;
+        _ref = result[0];
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          i = _ref[_i];
+          _results.push(i[0]);
+        }
+        return _results;
+      })()).join(""));
     });
   };
   fn.on_mouse_down = function(event) {

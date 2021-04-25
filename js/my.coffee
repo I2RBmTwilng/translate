@@ -28,10 +28,9 @@ window.mainCtrl=($scope,$http,$filter)->
                 f (j.tgt for j in i for i in result.translateResult).join("")
                 
     fn.fanyi_google=(input,f)->
-        $.get "http://translate.google.com/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), 
-        (result)->$scope.$apply ->
-            c=eval result
-            f (i[0] for i in c[0]).join("")
+        urls="http://translate.google.com/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input)
+        $http(method:'GET',url:urls,transformResponse:[(r)->eval(r)]).success (result)-> f (i[0] for i in result[0]).join("")
+        #使用JSON.parse会报错,只能覆盖transformResponse换成eval
 
     fn.on_mouse_down=(event)->v.mouse_down_x=event.clientX;v.mouse_down_y=event.clientY
 
