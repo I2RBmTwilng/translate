@@ -1,4 +1,4 @@
-windows.mainCtrl=($scope,$http,$filter)->
+window.mainCtrl=($scope,$http,$filter)->
     fn=new Object #内部函数
     v=new Object #内部变量
     $scope.input = "HTML input element control with angular data-binding. Input control follows HTML5 input types and polyfills the HTML5 validation behavior for older browsers."
@@ -46,7 +46,7 @@ windows.mainCtrl=($scope,$http,$filter)->
             $scope.fanyi_s sText        
 
 
-    document.addEventListener "mouseup",fn.on_mouse_up,true
-    document.addEventListener "mousedown",fn.on_mouse_down,true
-    document.addEventListener "dblclick",fn.on_mouse_dbclick,true
+    $("#input").mouseup fn.on_mouse_up
+    $("#input").mousedown fn.on_mouse_down
+    $("#input").dblclick fn.on_mouse_dbclick
 
