@@ -84,11 +84,11 @@ window.mainCtrl = function($scope, $http, $filter) {
     });
   };
   fn.fanyi_google = function(input, f) {
-    var urls;
-    urls = "http://translate.google.com/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input);
+    var url;
+    url = "http://translate.google.com/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input);
     return $http({
       method: 'GET',
-      url: urls,
+      url: url,
       transformResponse: [
         function(r) {
           return eval(r);
