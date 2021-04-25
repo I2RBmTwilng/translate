@@ -18,20 +18,20 @@ window.mainCtrl=($scope,$http,$filter)->
         $.post "http://fanyi.baidu.com/v2transapi",
             from:"en",to:"zh",query:input,transtype:"realtime",
             (result)->$scope.$apply ->
-                output=""; output+=i.dst for i in result.trans_result.data; f output
+                f (i.dst for i in result.trans_result.data).join("")
 
     fn.fanyi_youdao=(input,f)->
         $.post "http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule&smartresult=ugc&sessionFrom=null",
         "type":"AUTO",i:unescape(encodeURIComponent(input)),"doctype":"json",
         "xmlVersion":"1.6","keyfrom" : "fanyi.web", "ue" : "UTF-8", "typoResult" : "true",
         (result)->$scope.$apply ->
-                output=""; output+=j.tgt for j in i for i in result.translateResult; f output
+                f (j.tgt for j in i for i in result.translateResult).join("")
                 
     fn.fanyi_google=(input,f)->
-        $.get "http://translate.google.com.tw/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), 
+        $.get "http://translate.google.com/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), 
         (result)->$scope.$apply ->
             c=eval result
-            output=""; output+=i[0] for i in c[0]; f output
+            f (i[0] for i in c[0]).join("")
 
     fn.on_mouse_down=(event)->v.mouse_down_x=event.clientX;v.mouse_down_y=event.clientY
 

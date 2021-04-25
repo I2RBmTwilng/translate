@@ -36,14 +36,17 @@ window.mainCtrl = function($scope, $http, $filter) {
       transtype: "realtime"
     }, function(result) {
       return $scope.$apply(function() {
-        var i, output, _i, _len, _ref;
-        output = "";
-        _ref = result.trans_result.data;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          i = _ref[_i];
-          output += i.dst;
-        }
-        return f(output);
+        var i;
+        return f(((function() {
+          var _i, _len, _ref, _results;
+          _ref = result.trans_result.data;
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            i = _ref[_i];
+            _results.push(i.dst);
+          }
+          return _results;
+        })()).join(""));
       });
     });
   };
@@ -58,32 +61,43 @@ window.mainCtrl = function($scope, $http, $filter) {
       "typoResult": "true"
     }, function(result) {
       return $scope.$apply(function() {
-        var i, j, output, _i, _j, _len, _len1, _ref;
-        output = "";
-        _ref = result.translateResult;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          i = _ref[_i];
-          for (_j = 0, _len1 = i.length; _j < _len1; _j++) {
-            j = i[_j];
-            output += j.tgt;
+        var i, j;
+        return f(((function() {
+          var _i, _len, _ref, _results;
+          _ref = result.translateResult;
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            i = _ref[_i];
+            _results.push((function() {
+              var _j, _len1, _results1;
+              _results1 = [];
+              for (_j = 0, _len1 = i.length; _j < _len1; _j++) {
+                j = i[_j];
+                _results1.push(j.tgt);
+              }
+              return _results1;
+            })());
           }
-        }
-        return f(output);
+          return _results;
+        })()).join(""));
       });
     });
   };
   fn.fanyi_google = function(input, f) {
-    return $.get("http://translate.google.com.tw/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), function(result) {
+    return $.get("http://translate.google.com/translate_a/t?client=t&sl=en&tl=zh-CN&hl=zh-CN&sc=2&ie=UTF-8&oe=UTF-8&oc=1&prev=btn&ssel=0&tsel=0&q=" + encodeURIComponent(input), function(result) {
       return $scope.$apply(function() {
-        var c, i, output, _i, _len, _ref;
+        var c, i;
         c = eval(result);
-        output = "";
-        _ref = c[0];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          i = _ref[_i];
-          output += i[0];
-        }
-        return f(output);
+        return f(((function() {
+          var _i, _len, _ref, _results;
+          _ref = c[0];
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            i = _ref[_i];
+            _results.push(i[0]);
+          }
+          return _results;
+        })()).join(""));
       });
     });
   };

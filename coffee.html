@@ -6,7 +6,7 @@
 		<script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 		<script src="js/my.js" type="text/javascript" charset="utf-8"></script>
-		
+		<script src="js/underscore.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
 	<body ng-controller="mainCtrl">
@@ -18,33 +18,35 @@
 						<input type="button" id="" value="翻译" ng-click="fanyi()"/>
 					</form>
 				</div>
-				<div class="col-md-4">
-					<div>
-						{{baidu}}
-					</div>
-					<hr />
-					<div>
-						{{youdao}}
-					</div>
-					<hr />
-					<div>
-						{{google}}
-					</div>
+				
+                <div class="col-md-4">
+                    <div>
+                        {{baidu}}
+                    </div>
+                    <hr />
+                    <div>
+                        {{youdao}}
+                    </div>
+                    <hr />
+                    <div>
+                        {{google}}
+                    </div>
 
-				</div>
-				<div class="col-md-4">
-					<div>
-						{{baidu_s}}
-					</div>
-					<hr />
-					<div>
-						{{youdao_s}}
-					</div>
-					<hr />
-					<div>
-						{{google_s}}
-					</div>
-				</div>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        {{baidu_s}}
+                    </div>
+                    <hr />
+                    <div>
+                        {{youdao_s}}
+                    </div>
+                    <hr />
+                    <div>
+                        {{google_s}}
+                    </div>
+                </div>
+
 			</div>
 
 		</div>
