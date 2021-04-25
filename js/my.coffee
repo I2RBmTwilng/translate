@@ -25,28 +25,31 @@ mainCtrl=($scope,$http,$filter)->
             c=eval result
             output=""; output+=i[0] for i in c[0]; f output
 
+    mouse_down_x=0
+    mouse_down_y=0
 
-    document.addEventListener "mouseup",on_mouse_up,true
-    document.addEventListener "mousedown",on_mouse_down,true
-    document.addEventListener "dblclick",on_mouse_dbclick,true
-    on_mouse_down=(event)->on_mouse_down_x=event.clientX;on_mouse_down_y=event.clientY
-    fanyi_s=(sText)->
+    $scope.on_mouse_down=(event)->mouse_down_x=event.clientX;mouse_down_y=event.clientY
+    $scope.fanyi_s=(sText)->
         $scope.google_s = $scope.baidu_s = $scope.youdao_s = "loading..."
-        fanyi_baidu sText,(result)->$scope.baidu_s=result
-        fanyi_youdao sText,(result)->$scope.youdao_s=result
-        fanyi_google sText,(result)->$scope.google_s=result
+        $scope.fanyi_baidu sText,(result)->$scope.baidu_s=result
+        $scope.fanyi_youdao sText,(result)->$scope.youdao_s=result
+        $scope.fanyi_google sText,(result)->$scope.google_s=result
 
-    on_mouse_up=(event)->
+    $scope.on_mouse_up=(event)->
         if Math.abs(event.clientX - mouse_down_x) > 2 or Math.abs(event.clientY - mouse_down_y) > 2 
-            if document.selection == undefined then sText = document.selection else sText= document.selection.createRange().text
-            if sText is "" then return 
-            if sText.length > 5000 then sText = sText.substr 0, 5000
-            fanyi_s(sText)
-
-    on_mouse_dbclick=(event)->
             if document.selection == undefined then sText = document.getSelection().toString() else sText= document.selection.createRange().text
             if sText is "" then return 
             if sText.length > 5000 then sText = sText.substr 0, 5000
-            fanyi_s(sText)            
+            $scope.fanyi_s(sText)
 
+    $scope.on_mouse_dbclick=(event)->
+            if document.selection == undefined then sText = document.getSelection().toString() else sText= document.selection.createRange().text
+            if sText is "" then return 
+            if sText.length > 5000 then sText = sText.substr 0, 5000
+            $scope.fanyi_s(sText)            
+
+
+    document.addEventListener "mouseup",$scope.on_mouse_up,true
+    document.addEventListener "mousedown",$scope.on_mouse_down,true
+    document.addEventListener "dblclick",$scope.on_mouse_dbclick,true
 

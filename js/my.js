@@ -2,7 +2,7 @@
 var mainCtrl;
 
 mainCtrl = function($scope, $http, $filter) {
-  var fanyi_s, on_mouse_dbclick, on_mouse_down, on_mouse_up;
+  var mouse_down_x, mouse_down_y;
   $scope.input = "HTML input element control with angular data-binding. Input control follows HTML5 input types and polyfills the HTML5 validation behavior for older browsers.";
   $scope.fanyi = function() {
     $scope.google = $scope.baidu = $scope.youdao = "loading...";
@@ -75,31 +75,29 @@ mainCtrl = function($scope, $http, $filter) {
       });
     });
   };
-  document.addEventListener("mouseup", on_mouse_up, true);
-  document.addEventListener("mousedown", on_mouse_down, true);
-  document.addEventListener("dblclick", on_mouse_dbclick, true);
-  on_mouse_down = function(event) {
-    var on_mouse_down_x, on_mouse_down_y;
-    on_mouse_down_x = event.clientX;
-    return on_mouse_down_y = event.clientY;
+  mouse_down_x = 0;
+  mouse_down_y = 0;
+  $scope.on_mouse_down = function(event) {
+    mouse_down_x = event.clientX;
+    return mouse_down_y = event.clientY;
   };
-  fanyi_s = function(sText) {
+  $scope.fanyi_s = function(sText) {
     $scope.google_s = $scope.baidu_s = $scope.youdao_s = "loading...";
-    fanyi_baidu(sText, function(result) {
+    $scope.fanyi_baidu(sText, function(result) {
       return $scope.baidu_s = result;
     });
-    fanyi_youdao(sText, function(result) {
+    $scope.fanyi_youdao(sText, function(result) {
       return $scope.youdao_s = result;
     });
-    return fanyi_google(sText, function(result) {
+    return $scope.fanyi_google(sText, function(result) {
       return $scope.google_s = result;
     });
   };
-  on_mouse_up = function(event) {
+  $scope.on_mouse_up = function(event) {
     var sText;
     if (Math.abs(event.clientX - mouse_down_x) > 2 || Math.abs(event.clientY - mouse_down_y) > 2) {
       if (document.selection === void 0) {
-        sText = document.selection;
+        sText = document.getSelection().toString();
       } else {
         sText = document.selection.createRange().text;
       }
@@ -109,10 +107,10 @@ mainCtrl = function($scope, $http, $filter) {
       if (sText.length > 5000) {
         sText = sText.substr(0, 5000);
       }
-      return fanyi_s(sText);
+      return $scope.fanyi_s(sText);
     }
   };
-  return on_mouse_dbclick = function(event) {
+  $scope.on_mouse_dbclick = function(event) {
     var sText;
     if (document.selection === void 0) {
       sText = document.getSelection().toString();
@@ -125,6 +123,9 @@ mainCtrl = function($scope, $http, $filter) {
     if (sText.length > 5000) {
       sText = sText.substr(0, 5000);
     }
-    return fanyi_s(sText);
+    return $scope.fanyi_s(sText);
   };
+  document.addEventListener("mouseup", $scope.on_mouse_up, true);
+  document.addEventListener("mousedown", $scope.on_mouse_down, true);
+  return document.addEventListener("dblclick", $scope.on_mouse_dbclick, true);
 };
