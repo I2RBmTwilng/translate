@@ -52,7 +52,7 @@ window.mainCtrl = function($scope, $http, $filter) {
   };
   fn.fanyi_youdao = function(input, f) {
     return $.post("http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule&smartresult=ugc&sessionFrom=null", {
-      "type": "AUTO",
+      "type": "EN2ZH_CN",
       i: unescape(encodeURIComponent(input)),
       "doctype": "json",
       "xmlVersion": "1.6",

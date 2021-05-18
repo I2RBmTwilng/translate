@@ -22,7 +22,7 @@ window.mainCtrl=($scope,$http,$filter)->
 
     fn.fanyi_youdao=(input,f)->
         $.post "http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule&smartresult=ugc&sessionFrom=null",
-        "type":"AUTO",i:unescape(encodeURIComponent(input)),"doctype":"json",
+        "type":"EN2ZH_CN",i:unescape(encodeURIComponent(input)),"doctype":"json",
         "xmlVersion":"1.6","keyfrom" : "fanyi.web", "ue" : "UTF-8", "typoResult" : "true",
         (result)->$scope.$apply ->
                 f (j.tgt for j in i for i in result.translateResult).join("")
